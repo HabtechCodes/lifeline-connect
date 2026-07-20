@@ -1,4 +1,4 @@
-import { BLOOD_COLORS, type BloodGroup } from "@/lib/donors";
+import { type BloodGroup } from "@/lib/donors";
 
 export function BloodBadge({ group, size = "md" }: { group: BloodGroup; size?: "sm" | "md" | "lg" }) {
   const sizes = {
@@ -8,8 +8,7 @@ export function BloodBadge({ group, size = "md" }: { group: BloodGroup; size?: "
   };
   return (
     <span
-      className={`inline-flex items-center justify-center rounded-lg font-bold text-white shadow ${sizes[size]}`}
-      style={{ backgroundColor: BLOOD_COLORS[group] }}
+      className={`inline-flex items-center justify-center rounded-lg font-bold text-white shadow bg-primary ${sizes[size]}`}
     >
       {group}
     </span>
