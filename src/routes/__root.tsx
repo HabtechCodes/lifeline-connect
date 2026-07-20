@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppProvider } from "@/context/AppContext";
 import { Nav } from "@/components/Nav";
+import { PWARegister } from "@/components/PWARegister";
 
 function NotFoundComponent() {
   return (
@@ -54,11 +55,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "LifeDrop — Blood Donor Finder" },
-      { name: "description", content: "Find and register blood donors near you in real time. Emergency blood requests, donor dashboard, and eligibility tracking." },
+      { title: "BloodMatch — Blood Group Matcher" },
+      { name: "description", content: "Quickly find compatible blood donors. Filter by blood group, city, and name." },
       { name: "theme-color", content: "#E53935" },
-      { property: "og:title", content: "LifeDrop — Blood Donor Finder" },
-      { property: "og:description", content: "Find blood donors near you in real time." },
+      { property: "og:title", content: "BloodMatch — Blood Group Matcher" },
+      { property: "og:description", content: "Quickly find compatible blood donors." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -96,10 +97,11 @@ function RootComponent() {
           <Nav />
           <main className="flex-1"><Outlet /></main>
           <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">
-            LifeDrop · Every drop counts. Data stored locally on this device.
+            BloodMatch · Find the right donor, fast.
           </footer>
         </div>
         <Toaster position="top-center" richColors />
+        <PWARegister />
       </AppProvider>
     </QueryClientProvider>
   );
