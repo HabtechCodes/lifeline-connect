@@ -1,7 +1,7 @@
 {
-  "name": "LifeDrop — Blood Donor Finder",
-  "short_name": "LifeDrop",
-  "description": "Find and register blood donors near you in real time.",
+  "name": "BloodMatch — Blood Group Matcher",
+  "short_name": "BloodMatch",
+  "description": "Quickly find compatible blood donors by blood group.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

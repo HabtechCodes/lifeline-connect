@@ -1,26 +1,26 @@
-# LifeDrop — Blood Donor Finder PWA
+# BloodMatch — Blood Group Matcher PWA
 
-A Progressive Web App that connects blood donors with recipients in real time. Built with TanStack Start (React 19 + Vite), Tailwind CSS v4, and browser Geolocation.
+A simple Progressive Web App that helps users find compatible blood donors by matching blood groups. Built with TanStack Start (React 19 + Vite), Tailwind CSS v4, and `vite-plugin-pwa` for offline support.
 
 ## Features
 
-- **Donor registration** with health declaration, age gate (18–65), and consent
-- **Search donors** by blood group, city, and sort by nearest (GPS) / recent / most reliable
-- **Emergency mode** — one-click SOS filters top-10 nearest eligible donors and simulates an alert
-- **Donor dashboard** with profile edit, donation logging, and eligibility (>90 days) tracking
-- **QR code** for instant profile sharing (client-generated)
-- **Admin/moderation** — verification badge toggle and "report fake donor" flow
-- **Data persistence** — localStorage with JSON export/import backup
-- **Blood stock alerts**, top-donor leaderboard, and WhatsApp share
-- **Dark/light theme**, mobile-first responsive UI, English/French/Spanish language switch (stub)
-- **PWA** — installable via `manifest.webmanifest` with red-themed icons
+- **Blood group selection** — choose your blood group from all 8 major types
+- **Compatibility matching** — shows universal donors (O-), same-group donors, and other compatible types based on ABO/Rh rules
+- **Match indicator** — each donor shows a compatibility label and percentage
+- **Quick filters** — filter by donor blood group, city, or search by name
+- **Pre-populated donor list** — 24 sample donors ready to use, no registration required
+- **PWA** — installable via `manifest.webmanifest` with a red blood-drop icon and offline support via a generated service worker
 
-## Notable design choices
+## Pages
 
-- Uses **TanStack Router** (file-based routing at `src/routes/`) instead of `react-router-dom`, matching the project template.
-- Data lives in `localStorage`; a demo generator seeds 22 sample donors on first visit.
-- Map integration (Leaflet) is intentionally omitted to keep the SSR bundle browser-safe; donor cards show distance in km when GPS is shared.
-- Service-worker offline caching is disabled in Lovable's preview to avoid stale caches; installability (add-to-home-screen) works via the manifest.
+- **Home** — select your blood group, filter donors, and view matches
+- **About** — emergency numbers and FAQ
+
+## Design
+
+- Clean, medical-app aesthetic
+- Primary color: red (`#E53935`)
+- Mobile-first responsive layout with soft card shadows
 
 ## Scripts
 
@@ -34,9 +34,14 @@ bun run build # production build
 
 ```
 src/
-  routes/       __root, index (home+search), register, dashboard, about
-  components/   Nav, DonorCard, BloodBadge, EmergencyButton
-  context/      AppContext (donors, prefs, geo)
-  lib/          donors.ts (types, storage, demo data, distance)
-public/         manifest.webmanifest, icon-192.png, icon-512.png
+  routes/       __root, index (home), about
+  components/   Nav, DonorCard, BloodBadge, PWARegister
+  context/      AppContext (pre-populated donor list)
+  lib/          donors.ts (static data), match.ts (compatibility logic), pwa-register.ts (guarded SW registration)
+public/         manifest.webmanifest, icon-192.png, icon-512.png, sw.js (generated at build)
 ```
+
+## Notes
+
+- The service worker is only registered in production, never in the Lovable preview or dev server.
+- Add `?sw=off` to the URL to unregister the service worker if needed.
