@@ -1,2 +1,6 @@
 [build]
-  publish = "dist"
+  command = "npm install && npm run build"
+  publish = ".output/public"
+
+[build.environment]
+  NODE_VERSION = "24"
