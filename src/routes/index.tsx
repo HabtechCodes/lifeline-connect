@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
 });
 
 function FindDonors() {
-  const { donors } = useApp();
+  const { donors, deleteDonor } = useApp();
   const [myGroup, setMyGroup] = useState<BloodGroup | "">("");
   const [filterGroup, setFilterGroup] = useState<BloodGroup | "">("");
   const [filterCity, setFilterCity] = useState("");
@@ -113,7 +113,7 @@ function FindDonors() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {results.map((d) => (
-              <DonorCard key={d.id} donor={d} compatible={Boolean(myGroup)} />
+              <DonorCard key={d.id} donor={d} compatible={Boolean(myGroup)} onDelete={deleteDonor} />
             ))}
             {results.length === 0 && (
               <p className="text-sm text-muted-foreground col-span-full">No donors match your filters.</p>
