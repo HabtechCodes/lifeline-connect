@@ -15,11 +15,24 @@ function shouldRegister(): boolean {
 
 async function unregisterStale() {
   if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
-  const regs = await navigator.serviceWorker.getRegistrations();
+
+  const registrations = await navigator.serviceWorker.getRegistrations();
   await Promise.all(
-    regs
-      .filter((r) => r.scope.includes("/sw.js"))
-      .map((r) => r.unregister()),
+    registrations
+      .filter((registration) => new URL(registration.scope).origin === location.origin)
+      .map((registration) => registration.unregister()),
+  );
+
+  if (!("caches" in window)) return;
+
+  const appCacheNames = new Set(["home", "about", "pages", "assets"]);
+  const cacheNames = await caches.keys();
+  await Promise.all(
+    cacheNames
+      .filter(
+        (cacheName) => appCacheNames.has(cacheName) || cacheName.startsWith("workbox-precache"),
+      )
+      .map((cacheName) => caches.delete(cacheName)),
   );
 }
 
