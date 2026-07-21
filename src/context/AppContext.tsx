@@ -4,6 +4,7 @@ import { loadDonors, saveDonors, type BloodGroup, type Donor } from "@/lib/donor
 interface AppContextValue {
   donors: Donor[];
   addDonor: (input: { name: string; bloodGroup: BloodGroup; phone: string; city: string }) => Donor;
+  deleteDonor: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -35,7 +36,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return donor;
   }, []);
 
-  return <AppContext.Provider value={{ donors, addDonor }}>{children}</AppContext.Provider>;
+  const deleteDonor = useCallback((id: string) => {
+    setDonors((prev) => {
+      const next = prev.filter((d) => d.id !== id);
+      saveDonors(next);
+      return next;
+    });
+  }, []);
+
+  return <AppContext.Provider value={{ donors, addDonor, deleteDonor }}>{children}</AppContext.Provider>;
 }
 
 export function useApp() {

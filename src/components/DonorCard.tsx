@@ -1,8 +1,8 @@
-import { CalendarDays, MapPin, Phone } from "lucide-react";
+import { CalendarDays, MapPin, Phone, Trash2 } from "lucide-react";
 import { BloodBadge } from "./BloodBadge";
 import { type Donor } from "@/lib/donors";
 
-export function DonorCard({ donor, compatible }: { donor: Donor; compatible?: boolean }) {
+export function DonorCard({ donor, compatible, onDelete }: { donor: Donor; compatible?: boolean; onDelete?: (id: string) => void }) {
   const added = new Date(donor.createdAt).toLocaleDateString();
   return (
     <article className="rounded-xl border border-border bg-card p-4 shadow-sm flex flex-col gap-3">
@@ -16,11 +16,22 @@ export function DonorCard({ donor, compatible }: { donor: Donor; compatible?: bo
             </p>
           </div>
         </div>
-        {compatible && (
-          <span className="text-[10px] uppercase font-semibold px-2 py-1 rounded-full bg-emerald-100 text-emerald-700">
-            Match
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {compatible && (
+            <span className="text-[10px] uppercase font-semibold px-2 py-1 rounded-full bg-emerald-100 text-emerald-700">
+              Match
+            </span>
+          )}
+          {onDelete && (
+            <button
+              onClick={() => onDelete(donor.id)}
+              aria-label={`Delete ${donor.name}`}
+              className="p-1.5 rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          )}
+        </div>
       </div>
 
       <a
