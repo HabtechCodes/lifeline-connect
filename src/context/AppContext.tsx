@@ -7,6 +7,8 @@ interface AppContextValue {
   deleteDonor: (id: string) => void;
 }
 
+const ADMIN_PASSWORD = "blood123";
+
 const AppContext = createContext<AppContextValue | null>(null);
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -38,8 +40,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const deleteDonor = useCallback((id: string) => {
     setDonors((prev) => {
+      const target = prev.find((d) => d.id === id);
+      if (!target) return prev;
+      const password = window.prompt(
+        `🔐 Admin Password Required\n\nTo delete ${target.name}, enter the admin password:`,
+      );
+      if (password === null) {
+        window.alert("❌ Deletion cancelled.");
+        return prev;
+      }
+      if (password !== ADMIN_PASSWORD) {
+        window.alert("❌ Incorrect password! Deletion cancelled.");
+        return prev;
+      }
       const next = prev.filter((d) => d.id !== id);
       saveDonors(next);
+      window.alert("✅ Donor deleted successfully!");
       return next;
     });
   }, []);
