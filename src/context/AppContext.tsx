@@ -7,6 +7,8 @@ interface AppContextValue {
   deleteDonor: (id: string) => void;
 }
 
+const ADMIN_PASSWORD = "blood123";
+
 const AppContext = createContext<AppContextValue | null>(null);
 
 export function AppProvider({ children }: { children: ReactNode }) {
