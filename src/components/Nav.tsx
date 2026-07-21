@@ -1,6 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { Droplet } from "lucide-react";
 
+const linkClass = "px-3 py-1.5 rounded-md hover:bg-accent";
+const activeLinkClass = "px-3 py-1.5 rounded-md bg-accent font-semibold";
+
 export function Nav() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b border-border">
@@ -10,20 +13,11 @@ export function Nav() {
           BloodMatch
         </Link>
         <nav className="ml-auto flex items-center gap-1 text-sm">
-          <Link
-            to="/"
-            activeOptions={{ exact: true }}
-            className="px-3 py-1.5 rounded-md hover:bg-accent"
-            activeProps={{ className: "px-3 py-1.5 rounded-md bg-accent font-semibold" }}
-          >
-            Home
+          <Link to="/" activeOptions={{ exact: true }} className={linkClass} activeProps={{ className: activeLinkClass }}>
+            Find Donors
           </Link>
-          <Link
-            to="/about"
-            className="px-3 py-1.5 rounded-md hover:bg-accent"
-            activeProps={{ className: "px-3 py-1.5 rounded-md bg-accent font-semibold" }}
-          >
-            About
+          <Link to="/register" className={linkClass} activeProps={{ className: activeLinkClass }}>
+            Register
           </Link>
         </nav>
       </div>
