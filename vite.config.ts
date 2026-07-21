@@ -18,26 +18,18 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest}"],
         navigateFallback: "/index.html",
         navigateFallbackAllowlist: [/^\/(?!~oauth).*$/],
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true,
         runtimeCaching: [
           {
-            urlPattern: /^\/$/,
+            urlPattern: ({ request }) => request.mode === "navigate",
             handler: "NetworkFirst",
-            options: { cacheName: "home", expiration: { maxEntries: 1 } },
-          },
-          {
-            urlPattern: /^\/about$/,
-            handler: "NetworkFirst",
-            options: { cacheName: "about", expiration: { maxEntries: 1 } },
-          },
-          {
-            urlPattern: /^\/.*$/,
-            handler: "NetworkFirst",
-            options: { cacheName: "pages", expiration: { maxEntries: 10 } },
-          },
-          {
-            urlPattern: /^\/assets\/.*$/,
-            handler: "CacheFirst",
-            options: { cacheName: "assets", expiration: { maxEntries: 50 } },
+            options: {
+              cacheName: "pages",
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 10 },
+            },
           },
         ],
       },
